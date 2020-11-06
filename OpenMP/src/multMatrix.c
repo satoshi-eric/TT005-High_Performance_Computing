@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <omp.h>
+#include "multMatrix.h"
 
 // Matrix 2x3 multplication Matrix 3x2 = Matrix 3x3
 // Matrix num_linhas num_colunas
