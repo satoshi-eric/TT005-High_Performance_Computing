@@ -49,14 +49,3 @@ int *multMatrix(int lin1, int col1, int *matrix1, int lin2, int col2, int *matri
     }
 }
 
-void printMatrix(int *matrix, int lin, int col)
-{
-    for (int i = 0; i < lin; i++)
-    {
-        for (int j = 0; j < col; j++)
-        {
-            printf("%d ", matrix[col*i + j]);
-        }
-        printf("\n");
-    }
-}

@@ -44,7 +44,7 @@ void printMatrix(int *mat, unsigned int lines, unsigned int columns, char *fileN
       for(j=0; j<columns; j++)
       {
           value = mat[i*columns + j];
-          fprintf(arq, "%ld\n", value);
+          fprintf(arq, "%d\n", value);
       }
   }
 
@@ -136,7 +136,7 @@ int *readMatrix(unsigned int lines, unsigned int columns, char *fileName)
  for (i=0; i<lines; i++)
      for(j=0; j<columns; j++)
      {
-         fscanf(arq, "%ld", &mat[i * columns + j]);
+         fscanf(arq, "%d", &mat[i * columns + j]);
      }
 
  fclose(arq);
@@ -183,7 +183,7 @@ double *readMatrixDouble(unsigned int lines, unsigned int columns, char *fileNam
  for (i=0; i<lines; i++)
      for(j=0; j<columns; j++)
      {
-         fscanf(arq, "%f", &mat[i * columns + j]);
+         fscanf(arq, "%lf", &mat[i * columns + j]);
      }
 
  fclose(arq);
