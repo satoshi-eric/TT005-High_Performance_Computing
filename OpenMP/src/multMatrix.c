@@ -35,6 +35,7 @@ int *multMatrix(int lin1, int col1, int *matrix1, int lin2, int col2, int *matri
         int number_el = lin2;
         int *matrix3 = (int *)malloc(lin3 * col3 * sizeof(int));
 
+        #pragma omp parallel for num_threads(4)
         for (int i = 0; i < lin1; i++)
         {
             for (int j = 0; j < col2; j++)
@@ -46,7 +47,8 @@ int *multMatrix(int lin1, int col1, int *matrix1, int lin2, int col2, int *matri
                 }
             }
         }
-    return matrix3;
+
+        return matrix3;
     }
 }
 

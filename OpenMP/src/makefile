@@ -5,7 +5,7 @@ main.o: main.c
 	gcc -c main.c -fopenmp
 
 multMatrix.o: multMatrix.c multMatrix.h
-	gcc -c multMatrix.c -fopenmp
+	gcc -o maultMatrix.o -c multMatrix.c -fopenmp
 
 clean:
-	rm main main.o
+	rm *.o main
