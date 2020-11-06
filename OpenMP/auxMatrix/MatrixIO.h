@@ -85,7 +85,7 @@ void printMatrixDouble(double *mat, unsigned int lines, unsigned int columns, ch
       for(j=0; j<columns; j++)
       {
           value = mat[i*columns + j];
-          fprintf(arq, "%.2f\n", value);
+          fprintf(arq, "%.2lf\n", value);
       }
   }
 

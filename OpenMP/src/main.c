@@ -50,14 +50,18 @@ int main (int argc, char *argv[])
             char *filename3 = (char *)malloc(100 * sizeof(char));
             char *filenameOut = (char *)malloc(100 * sizeof(char));
 
+            /**
             strcpy(filename1, argv[4]);
             strcpy(filename2, argv[5]);
             strcpy(filename3, argv[6]);
             strcpy(filenameOut, argv[7]);
+            */
 
-            double *matrix1 = readMatrixDouble(y, w, filename1);
-            double *matrix2 = readMatrixDouble(w, v, filename2);
-            double *matrix3 = readMatrixDouble(v, 1, filename3);
+            
+            double *matrix1 = readMatrixDouble(y, w, argv[4]);
+            double *matrix2 = readMatrixDouble(w, v, argv[5]);
+            double *matrix3 = readMatrixDouble(v, 1, argv[6]);
+            
 
             /**
              * A y x w 
@@ -65,11 +69,18 @@ int main (int argc, char *argv[])
              * C v x 1
              * D y x 1
              */
+            /**
+             * Comando: ./main 997 981 991 arqA_997x981.dat arqB_981x991.dat arqC_991x1.dat arqD.dat
+             */
 
+            /*
             double *matrix4 = multMatrix(y, w, matrix1, w, v, matrix2);
             double *matrixRes = multMatrix(y, v, matrix4, v, 1, matrix3);
+            */
 
-            printMatrixDouble(matrixRes, y, 1, filenameOut);
+            double *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
+
+            printMatrixDouble(matrixRes, y, 1, argv[7]);
         }
     }
     
