@@ -4,9 +4,6 @@
 #include <time.h>
 #define posicao(I, J, COLUNAS) ((I)*(COLUNAS) + (J))
 
-// Matrix 2x3 multplication Matrix 3x2 = Matrix 3x3
-// Matrix num_linhas num_colunas
-
 /**
  * Funcao para multiplicar matrizes alocadas em uma única etapa
  * 
@@ -44,13 +41,19 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
         //Contadores
         int i, j, k;
 
-        int begin = time(NULL);
+        // Calculando o tempo 
+        clock_t Ticks[2];
+
+        
 
         #pragma omp parallel for num_threads(4) private(i, j, k)
+        // Percorre as linhas da matriz1
         for (i = 0; i < lin1; i++)
         {
+            // Percorre as colunas da matriz2
             for (j = 0; j < col2; j++)
             {
+                // Somatório de cada elemento da multiplicação de matrizes
                 for (k = 0; k < col1; k++)
                 {
                     matrix3[posicao(i, j, col3)] += (matrix1[posicao(i, k, col1)] * matrix2[posicao(k, j, col2)]);
@@ -58,16 +61,25 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
             }
         }
 
-        int end = time(NULL);
-        printf("Time to multiply matrix: %d segundos\n", end - begin);
+
+        double executionTime = (double)(Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
 
         return matrix3;
     }
 }
 
-double reductionSum(int lin, int col, double *matrix)
+/**
+ * Função para somar todos os elementos da matriz
+ * 
+ * @param lin número de linhas da matriz
+ * @param col número de colunas da matriz
+ * @param matrix ponteiro para a matriz 
+ * 
+ * @return Soma de todos os elementos da matriz
+ */ 
+double reductionSum(int lin, int col, float *matrix)
 {
-    double sum = 0;
+    float sum = 0;
 
     #pragma parallel for num_threads(4) reduction(+:sum)
     for (int i = 0; i < lin*col; i++)

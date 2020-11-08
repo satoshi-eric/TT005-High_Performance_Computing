@@ -47,7 +47,12 @@ int main (int argc, char *argv[])
             float *matrix2 = readMatrixFloat(w, v, argv[5]);
             float *matrix3 = readMatrixFloat(v, 1, argv[6]);
 
+            clock_t begin = clock();
             float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
+            clock_t end = clock();
+
+            double time = (double) (end - begin)/ CLOCKS_PER_SEC;
+            printf("%lf\n", time);
 
             printMatrixFloat(matrixRes, y, 1, argv[7]);
         }
