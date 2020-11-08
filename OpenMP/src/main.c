@@ -51,10 +51,6 @@ int main (int argc, char *argv[])
             double *matrix1 = readMatrixDouble(y, w, argv[4]);
             double *matrix2 = readMatrixDouble(w, v, argv[5]);
             double *matrix3 = readMatrixDouble(v, 1, argv[6]);
-           
-            /**
-             * Comando: ./main 997 981 991 arqA_997x981.dat arqB_981x991.dat arqC_991x1.dat arqD.dat
-             */
 
             double *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
 
