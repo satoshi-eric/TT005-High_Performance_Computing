@@ -44,7 +44,7 @@ void printMatrix(int *mat, unsigned int lines, unsigned int columns, char *fileN
       for(j=0; j<columns; j++)
       {
           value = mat[i*columns + j];
-          fprintf(arq, "%d\n", value);
+          fprintf(arq, "%ld\n", value);
       }
   }
 
@@ -62,7 +62,7 @@ void printMatrix(int *mat, unsigned int lines, unsigned int columns, char *fileN
  * @param columns Numero de colunas da matriz.
  * @param fileName Nome do arquivo onde a matriz sera gravada.
  */
-void printMatrixDouble(double *mat, unsigned int lines, unsigned int columns, char *fileName)
+void printMatrixFloat(float *mat, unsigned int lines, unsigned int columns, char *fileName)
 {
   register unsigned int i, j;
   register double value;
@@ -85,7 +85,7 @@ void printMatrixDouble(double *mat, unsigned int lines, unsigned int columns, ch
       for(j=0; j<columns; j++)
       {
           value = mat[i*columns + j];
-          fprintf(arq, "%.2lf\n", value);
+          fprintf(arq, "%.2f\n", value);
       }
   }
 
@@ -136,7 +136,7 @@ int *readMatrix(unsigned int lines, unsigned int columns, char *fileName)
  for (i=0; i<lines; i++)
      for(j=0; j<columns; j++)
      {
-         fscanf(arq, "%d", &mat[i * columns + j]);
+         fscanf(arq, "%ld", &mat[i * columns + j]);
      }
 
  fclose(arq);
@@ -152,10 +152,10 @@ int *readMatrix(unsigned int lines, unsigned int columns, char *fileName)
  *
  * @return Ponteiro para o endereco da matriz devidamente alocada.
  */
-double *readMatrixDouble(unsigned int lines, unsigned int columns, char *fileName)
+float *readMatrixFloat(unsigned int lines, unsigned int columns, char *fileName)
 {
  register unsigned int i, j;
- double *mat;
+ float *mat;
  FILE *arq;
 
  /* Se o nome do arquivo for nulo, aborte o programa */
@@ -172,7 +172,7 @@ double *readMatrixDouble(unsigned int lines, unsigned int columns, char *fileNam
    exit(EXIT_FAILURE);
  }
 /*Aloca a matriz*/
- mat = (double *) malloc (sizeof(double) * lines * columns);
+ mat = (float *) malloc (sizeof(float) * lines * columns);
 
  if (mat == NULL)
  {
@@ -183,7 +183,7 @@ double *readMatrixDouble(unsigned int lines, unsigned int columns, char *fileNam
  for (i=0; i<lines; i++)
      for(j=0; j<columns; j++)
      {
-         fscanf(arq, "%lf", &mat[i * columns + j]);
+         fscanf(arq, "%f", &mat[i * columns + j]);
      }
 
  fclose(arq);

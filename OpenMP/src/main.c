@@ -42,19 +42,14 @@ int main (int argc, char *argv[])
             fprintf(stderr, "numero de linhas das matrizes incorreto\n");
         }
         else
-        {
-            char *filename1 = (char *)malloc(100 * sizeof(char));
-            char *filename2 = (char *)malloc(100 * sizeof(char));
-            char *filename3 = (char *)malloc(100 * sizeof(char));
-            char *filenameOut = (char *)malloc(100 * sizeof(char));
-            
-            double *matrix1 = readMatrixDouble(y, w, argv[4]);
-            double *matrix2 = readMatrixDouble(w, v, argv[5]);
-            double *matrix3 = readMatrixDouble(v, 1, argv[6]);
+        {            
+            float *matrix1 = readMatrixFloat(y, w, argv[4]);
+            float *matrix2 = readMatrixFloat(w, v, argv[5]);
+            float *matrix3 = readMatrixFloat(v, 1, argv[6]);
 
-            double *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
+            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
 
-            printMatrixDouble(matrixRes, y, 1, argv[7]);
+            printMatrixFloat(matrixRes, y, 1, argv[7]);
         }
     }
     
