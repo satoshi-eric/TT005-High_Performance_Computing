@@ -24,7 +24,7 @@ double *multMatrix(int lin1, int col1, double *matrix1, int lin2, int col2, doub
     /* Verificando se é possível multiplicar as 2 matrizes */
     if (col1 != lin2)
     {
-        printf("O numero de colunas da matriz 1 e diferente do numero de linhas da matriz 2\n");
+        printf("The number of matrix 1 columns is different to number of matrix 2 lines \n");
         exit(EXIT_FAILURE);
     }
     else
@@ -51,9 +51,21 @@ double *multMatrix(int lin1, int col1, double *matrix1, int lin2, int col2, doub
         }
 
         int end = time(NULL);
-        printf("%d\n", end - begin);
+        printf("Time to multiply matrix: %d segundos\n", end - begin);
 
         return matrix3;
     }
 }
 
+double reductionSum(int lin, int col, double *matrix)
+{
+    double sum = 0;
+
+    #pragma parallel for num_threads(4) reduction(+:sum)
+    for (int i = 0; i < lin*col; i++)
+    {
+        sum += matrix[i];
+    }
+
+    return sum;
+}

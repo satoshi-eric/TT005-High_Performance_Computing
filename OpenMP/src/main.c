@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <omp.h>
-#include "../auxMatrix/MatrixIO.h"
+#include "auxMatrix/MatrixIO.h"
 #include "multMatrix.h"
 
 /**
@@ -22,8 +22,6 @@
  * arqD.dat é o nome do arquivo que contém a matriz resultante da computação
  * 
  */
-// https://moodle.ggte.unicamp.br/pluginfile.php/1080242/mod_resource/content/3/EspecificacaoLaboratorios.pdf
-// https://github.com/gradvohl/TT005_Laboratorios
 
 int main (int argc, char *argv[])
 {
@@ -49,34 +47,14 @@ int main (int argc, char *argv[])
             char *filename2 = (char *)malloc(100 * sizeof(char));
             char *filename3 = (char *)malloc(100 * sizeof(char));
             char *filenameOut = (char *)malloc(100 * sizeof(char));
-
-            /**
-            strcpy(filename1, argv[4]);
-            strcpy(filename2, argv[5]);
-            strcpy(filename3, argv[6]);
-            strcpy(filenameOut, argv[7]);
-            */
-
             
             double *matrix1 = readMatrixDouble(y, w, argv[4]);
             double *matrix2 = readMatrixDouble(w, v, argv[5]);
             double *matrix3 = readMatrixDouble(v, 1, argv[6]);
-            
-
-            /**
-             * A y x w 
-             * B w x v 
-             * C v x 1
-             * D y x 1
-             */
+           
             /**
              * Comando: ./main 997 981 991 arqA_997x981.dat arqB_981x991.dat arqC_991x1.dat arqD.dat
              */
-
-            /*
-            double *matrix4 = multMatrix(y, w, matrix1, w, v, matrix2);
-            double *matrixRes = multMatrix(y, v, matrix4, v, 1, matrix3);
-            */
 
             double *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
 
