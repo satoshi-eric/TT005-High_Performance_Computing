@@ -8,6 +8,7 @@
 
 int main (int argc, char *argv[])
 {
+    // Tramento de erro de argumentos fornecidos pelo terminal
     if (argc < 8)
     {
         printf("Uso:\n");
@@ -31,14 +32,17 @@ int main (int argc, char *argv[])
             float *matrix1 = readMatrixFloat(y, w, argv[4]);
             float *matrix2 = readMatrixFloat(w, v, argv[5]);
             float *matrix3 = readMatrixFloat(v, 1, argv[6]);
+            
+            clock_t begin = clock(); // Calculando tempo de execução da multiplicação
+            
+            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3); // Multiplicação de matrizes
 
-            clock_t begin = clock();
-            // Multiplicação de matrizes
-            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
-            clock_t end = clock();
+            clock_t end = clock(); // Calculando tempo de execução da multiplicação
 
-            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_get_num_threads();
+            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_get_num_threads(); // Tempo de execução da multiplicação
+            
             printf("Time to multiply the matrices %.2lf s\n", time);
+
             printf("Reduction sum: %.2f\n", reductionSum(y, 1, matrixRes));
 
             printMatrixFloat(matrixRes, y, 1, argv[7]);
