@@ -41,15 +41,11 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
         //Contadores
         int i, j, k;
 
-        // Calculando o tempo 
-        clock_t Ticks[2];
-
-        
-
-        #pragma omp parallel for num_threads(4) private(i, j, k)
+        #pragma omp parallel for num_threads(2) private(i, j, k)
         // Percorre as linhas da matriz1
         for (i = 0; i < lin1; i++)
         {
+            #pragma omp parallel for num_threads(2)
             // Percorre as colunas da matriz2
             for (j = 0; j < col2; j++)
             {
@@ -60,9 +56,6 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
                 }
             }
         }
-
-
-        double executionTime = (double)(Ticks[1] - Ticks[0]) * 1000 / CLOCKS_PER_SEC;
 
         return matrix3;
     }

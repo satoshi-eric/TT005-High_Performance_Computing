@@ -5,23 +5,6 @@
 #include "auxMatrix/MatrixIO.h"
 #include "multMatrix.h"
 
-/**
- * A y x w 
- * B w x v 
- * C v x 1
- * D y x 1
- * 
- * ./main y w v arqA.dat arqB.dat arqC.dat arqD.dat 
- * 
- * y é o número de linhas da primeira matriz. 
- * w é o número de colunas da primeira matriz e de linhas da segunda matriz. 
- * v é o número de colunas da segunda matriz e de linhas da terceira matriz. 
- * arqA.dat é o nome do arquivo que contém a primeira matriz. 
- * arqB.dat é o nome do arquivo que contém a segunda matriz. 
- * arqC.dat é o nome do arquivo que contém a terceira matriz. 
- * arqD.dat é o nome do arquivo que contém a matriz resultante da computação
- * 
- */
 
 int main (int argc, char *argv[])
 {
@@ -37,27 +20,30 @@ int main (int argc, char *argv[])
         int w = atoi(argv[2]);
         int v = atoi(argv[3]);
 
+        // Tratamento de erro para valores de linhas menores ou iguais a 0
         if (y < 1 || w < 1 || v < 1)
         {
-            fprintf(stderr, "numero de linhas das matrizes incorreto\n");
+            fprintf(stderr, "numero de linhas das matrizes não pode ser menor ou igual a zero\n");
         }
         else
         {            
+            // Lendo matrizes
             float *matrix1 = readMatrixFloat(y, w, argv[4]);
             float *matrix2 = readMatrixFloat(w, v, argv[5]);
             float *matrix3 = readMatrixFloat(v, 1, argv[6]);
 
             clock_t begin = clock();
+            // Multiplicação de matrizes
             float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
             clock_t end = clock();
 
-            double time = (double) (end - begin)/ CLOCKS_PER_SEC;
-            printf("%lf\n", time);
+            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_set_num_threads();
+            printf("%.2lf s\n", time);
 
             printMatrixFloat(matrixRes, y, 1, argv[7]);
         }
     }
-    
+
 
     return 0;
 }
