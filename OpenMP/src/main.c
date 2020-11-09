@@ -39,7 +39,7 @@ int main (int argc, char *argv[])
 
             double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_get_num_threads();
             printf("Time to multiply the matrices %.2lf s\n", time);
-            printf("Reduction sum: %.2f", reductionSum(y, 1, matrixRes));
+            printf("Reduction sum: %.2f\n", reductionSum(y, 1, matrixRes));
 
             printMatrixFloat(matrixRes, y, 1, argv[7]);
         }
