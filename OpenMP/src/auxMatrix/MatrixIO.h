@@ -65,7 +65,7 @@ void printMatrix(int *mat, unsigned int lines, unsigned int columns, char *fileN
 void printMatrixFloat(float *mat, unsigned int lines, unsigned int columns, char *fileName)
 {
   register unsigned int i, j;
-  register double value;
+  register float value;
   FILE *arq;
 
   /* Se o nome do arquivo for nulo, entao imprime na saida padrao */

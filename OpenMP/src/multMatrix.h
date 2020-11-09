@@ -32,23 +32,17 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
         int col3 = col2;
         float *matrix3 = (float *)malloc(lin3 * col3 * sizeof(float));
 
-        #pragma omp parallel for num_threads(4)
-        for (int i=0; i<lin3*col3; i++)
-        {
-            matrix3[i] = 0;
-        }
-
         //Contadores
         int i, j, k;
 
-        #pragma omp parallel for num_threads(2) private(i, j, k)
+        #pragma omp parallel for num_threads(4) private(i, j, k)
         // Percorre as linhas da matriz1
         for (i = 0; i < lin1; i++)
         {
-            #pragma omp parallel for num_threads(2)
             // Percorre as colunas da matriz2
             for (j = 0; j < col2; j++)
             {
+                 matrix3[posicao(i, j, col3)] = 0;
                 // Somatório de cada elemento da multiplicação de matrizes
                 for (k = 0; k < col1; k++)
                 {
@@ -70,7 +64,7 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
  * 
  * @return Soma de todos os elementos da matriz
  */ 
-double reductionSum(int lin, int col, float *matrix)
+float reductionSum(int lin, int col, float *matrix)
 {
     float sum = 0;
 
