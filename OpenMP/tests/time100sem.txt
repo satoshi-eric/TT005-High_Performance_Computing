@@ -1,0 +1,2 @@
+Time to multiply the matrices 0.01375200 s
+Reduction sum: 134948577280.00

@@ -40,7 +40,7 @@ int main (int argc, char *argv[])
 
             clock_t end = clock(); // Calculando tempo de execução da multiplicação
 
-            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/numThreads; // Tempo de execução da multiplicação
+            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC)); // Tempo de execução da multiplicação
             
             printf("Time to multiply the matrices %.8lf s\n", time);
 
