@@ -37,7 +37,7 @@ int main (int argc, char *argv[])
             float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3);
             clock_t end = clock();
 
-            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_set_num_threads();
+            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC))/omp_get_num_threads();
             printf("%.2lf s\n", time);
 
             printMatrixFloat(matrixRes, y, 1, argv[7]);
