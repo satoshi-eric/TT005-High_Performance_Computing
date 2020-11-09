@@ -64,7 +64,7 @@ float *multMatrix(int lin1, int col1, float *matrix1, int lin2, int col2, float 
  * 
  * @return Soma de todos os elementos da matriz
  */ 
-double reductionSum(int lin, int col, float *matrix)
+float reductionSum(int lin, int col, float *matrix)
 {
     float sum = 0;
 
