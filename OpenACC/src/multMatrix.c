@@ -47,7 +47,7 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 			}
 		}
 
-		#pragma acc parallel loop collapse(3) copyout(matrix3[0:lin3*col3])
+		#pragma acc collapse(3)  data copyout(matrix3[0:lin3*col3]) copyin(matrix1[0:lin1*col1], matrix2[0:lin2*col2]) 
 		for (i=0; i<lin1; i++)
 		{
 			for (j=0; j<col2; j++)
