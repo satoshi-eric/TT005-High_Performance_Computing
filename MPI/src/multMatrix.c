@@ -1,7 +1,7 @@
 #include "multMatrix.h"
 #include <stdlib.h>
 #include <stdio.h>
-#include <openacc.h>
+#include "mpi.h"
 
 #define posicao(I, J, COLUNAS) (I*COLUNAS + J)
 
@@ -35,7 +35,6 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 		// Contadores
 		int i, j, k;
 
-		#pragma acc parallel loop collapse(2) copyin(matrix3[0:lin3*col3])
 		for ( i=0; i<lin1; i++ )
 		{
 			for ( j=0; j<col2; j++)
@@ -47,7 +46,6 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 			}
 		}
 
-		#pragma acc collapse(3)  data copyout(matrix3[0:lin3*col3]) copyin(matrix1[0:lin1*col1], matrix2[0:lin2*col2]) 
 		for (i=0; i<lin1; i++)
 		{
 			for (j=0; j<col2; j++)
@@ -65,10 +63,10 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 }
 
 /**
- * Função para somar todos os elementos da matriz
+ * Funï¿½ï¿½o para somar todos os elementos da matriz
  * 
- * @param lin número de linhas da matriz
- * @param col número de colunas da matriz
+ * @param lin nï¿½mero de linhas da matriz
+ * @param col nï¿½mero de colunas da matriz
  * @param matrix ponteiro para a matriz 
  * 
  * @return Soma de todos os elementos da matriz
@@ -76,8 +74,6 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 float reductionSum(int lin, int col, float *matrix)
 {
     float sum = 0;
-
-	#pragma acc parallel loop reduction(+:sum)
 	// Itrando pelos elementos da matriz
 	for (int i = 0; i < lin*col; i++)
 	{	
