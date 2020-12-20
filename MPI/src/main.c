@@ -3,8 +3,13 @@
 #include <string.h>
 #include <openacc.h>
 #include <time.h>
-#include "MatrixIO.h"
-#include "multMatrix.h"
+//#include "MatrixIO.h"
+//#include "multMatrix.h"
+#include "multMatrix.c"
+#include "MatrixIO.c"
+#include "mpi.h"
+
+#define TAMANHO 4
 
 
 int main (int argc, char *argv[])
@@ -17,6 +22,8 @@ int main (int argc, char *argv[])
     }
     else
     {
+        int numtasks, rank;
+
         // argv: ./main y w v arqA.dat arqB.dat arqC.dat arqD.dat 
         int y = atoi(argv[1]);
         int w = atoi(argv[2]);
@@ -30,30 +37,38 @@ int main (int argc, char *argv[])
         else
         {     
             MPI_Init(&argc, &argv);   
+            MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+            MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
 
-            int numThreads = 4;    
-            // Lendo matrizes
-            float *matrix1 = readMatrixFloat(y, w, argv[4]);
-            float *matrix2 = readMatrixFloat(w, v, argv[5]);
-            float *matrix3 = readMatrixFloat(v, 1, argv[6]);
-            
-            clock_t begin = clock(); // Calculando tempo de execu��o da multiplica��o
-            
-            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3); // Multiplica��o de matrizes
 
-            clock_t end = clock(); // Calculando tempo de execu��o da multiplica��o
-
-            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC)); // Tempo de execu��o da multiplica��o
-            
-            printf("Time to multiply the matrices %.8lf s\n", time);
-
-            printf("Reduction sum: %.2f\n", reductionSum(y, 1, matrixRes));
-
-            printMatrixFloat(matrixRes, y, 1, argv[7]);
+        		if(numtasks == TAMANHO){
+              int numThreads = 4;    
+              // Lendo matrizes
+              float *matrix1 = readMatrixFloat(y, w, argv[4]);
+              float *matrix2 = readMatrixFloat(w, v, argv[5]);
+              float *matrix3 = readMatrixFloat(v, 1, argv[6]);
+              
+              clock_t begin = clock(); // Calculando tempo de execu��o da multiplica��o
+              
+              float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3); // Multiplica��o de matrizes
+  
+              clock_t end = clock(); // Calculando tempo de execu��o da multiplica��o
+  
+              double time = ((double) (end - begin)/ (CLOCKS_PER_SEC)); // Tempo de execu��o da multiplica��o
+              
+              printf("Time to multiply the matrices %.8lf s\n", time);
+  
+              printf("Reduction sum: %.2f\n", reductionSum(y, 1, matrixRes));
+  
+              printMatrixFloat(matrixRes, y, 1, argv[7]);
+  	        
+              MPI_Finalize();
+        		}else{
+              printf("O programa requer %d processadores.\n",TAMANHO);
+            }
         }
     }
 
     		
-	MPI_Finalize();
     return 0;
 }

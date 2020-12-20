@@ -28,53 +28,34 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 	}
 	else
 	{
-		int numtasks, rank, sendcount, recvcount, source;
+		int sendcount, recvcount, source;
 
 		// Variáveis para a matriz 3: resultado
 		int lin3 = lin1;
 		int col3 = col2;
-		float *matrix3 = (float *) malloc(lin3 * col3 * sizeof(float));
+		float *matrix3 = (float *) calloc(lin3 * col3, sizeof(float));
 		float recvbuf[TAMANHO];
 
 		// Contadores
 		int i, j, k;
+		source = 1;
+		sendcount = TAMANHO;
+		recvcount = TAMANHO;
 
-		MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
-		MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-
-		if(numtasks == TAMANHO){
-			source = 1;
-			sendcount = TAMANHO;
-			recvcount = TAMANHO;
-
-			MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount, MPI_FLOAT,source,MPI_COMM_WORLD);
-			
-			for ( i=0; i<lin1; i++ )
+		MPI_Scatter(matrix3,sendcount,MPI_FLOAT,recvbuf,recvcount, MPI_FLOAT,source,MPI_COMM_WORLD);
+		for (i=0; i<lin1; i++)
+		{
+			for (j=0; j<col2; j++)
 			{
-				for ( j=0; j<col2; j++)
+				for (k=0; k<col1; k++)
 				{
-					
-					// Multiplicação de matrizes
-					matrix3[posicao(i, j, col3)] = 0; 
-
+					matrix3[posicao(i, j, col3)] += matrix1[posicao(i, k, col1)] * matrix2[posicao(k, j, col2)];
 				}
 			}
-
-			for (i=0; i<lin1; i++)
-			{
-				for (j=0; j<col2; j++)
-				{
-					for (k=0; k<col1; k++)
-					{
-						matrix3[posicao(i, j, col3)] += matrix1[posicao(i, k, col1)] * matrix2[posicao(k, j, col2)];
-					}
-				}
-			}
+		}
 
 
-			return matrix3;
-		}else
-			printf("O programa requer %d processadores.\n",TAMANHO);
+    return matrix3;
 	}	
 }
 
