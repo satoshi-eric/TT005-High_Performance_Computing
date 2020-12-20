@@ -25,23 +25,25 @@ int main (int argc, char *argv[])
         // Tratamento de erro para valores de linhas menores ou iguais a 0
         if (y < 1 || w < 1 || v < 1)
         {
-            fprintf(stderr, "numero de linhas das matrizes não pode ser menor ou igual a zero\n");
+            fprintf(stderr, "numero de linhas das matrizes nï¿½o pode ser menor ou igual a zero\n");
         }
         else
-        {        
+        {     
+            MPI_Init(&argc, &argv);   
+
             int numThreads = 4;    
             // Lendo matrizes
             float *matrix1 = readMatrixFloat(y, w, argv[4]);
             float *matrix2 = readMatrixFloat(w, v, argv[5]);
             float *matrix3 = readMatrixFloat(v, 1, argv[6]);
             
-            clock_t begin = clock(); // Calculando tempo de execução da multiplicação
+            clock_t begin = clock(); // Calculando tempo de execuï¿½ï¿½o da multiplicaï¿½ï¿½o
             
-            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3); // Multiplicação de matrizes
+            float *matrixRes = multMatrix(y, v, multMatrix(y, w, matrix1, w, v, matrix2), v, 1, matrix3); // Multiplicaï¿½ï¿½o de matrizes
 
-            clock_t end = clock(); // Calculando tempo de execução da multiplicação
+            clock_t end = clock(); // Calculando tempo de execuï¿½ï¿½o da multiplicaï¿½ï¿½o
 
-            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC)); // Tempo de execução da multiplicação
+            double time = ((double) (end - begin)/ (CLOCKS_PER_SEC)); // Tempo de execuï¿½ï¿½o da multiplicaï¿½ï¿½o
             
             printf("Time to multiply the matrices %.8lf s\n", time);
 
@@ -51,6 +53,7 @@ int main (int argc, char *argv[])
         }
     }
 
-
+    		
+	MPI_Finalize();
     return 0;
 }

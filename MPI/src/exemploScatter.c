@@ -29,8 +29,7 @@ int main( int argc, char **argv)
   /* Note que apenas o processo source= 1 envia,
    * mas todos os processos (inclusive o source=1) recebem
    */ 
-  MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount,
-             MPI_FLOAT,source,MPI_COMM_WORLD);
+  MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount, MPI_FLOAT,source,MPI_COMM_WORLD);
 
   printf("rank= %d  Resultado: %f %f %f %f\n",rank,recvbuf[0],
            recvbuf[1],recvbuf[2],recvbuf[3]);

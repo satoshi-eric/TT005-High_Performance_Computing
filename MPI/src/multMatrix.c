@@ -39,7 +39,6 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 		// Contadores
 		int i, j, k;
 
-		MPI_Init(&argc, &argv);
 		MPI_Comm_size(MPI_COMM_WORLD, &numtasks);
 		MPI_Comm_rank(MPI_COMM_WORLD, &rank);
 
@@ -48,8 +47,7 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 			sendcount = TAMANHO;
 			recvcount = TAMANHO;
 
-			MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount,
-            MPI_FLOAT,source,MPI_COMM_WORLD);
+			MPI_Scatter(sendbuf,sendcount,MPI_FLOAT,recvbuf,recvcount, MPI_FLOAT,source,MPI_COMM_WORLD);
 			
 			for ( i=0; i<lin1; i++ )
 			{
@@ -77,8 +75,6 @@ float *multMatrix ( int lin1, int col1, float *matrix1, int lin2, int col2, floa
 			return matrix3;
 		}else
 			printf("O programa requer %d processadores.\n",TAMANHO);
-		
-		MPI_Finalize();
 	}	
 }
 
