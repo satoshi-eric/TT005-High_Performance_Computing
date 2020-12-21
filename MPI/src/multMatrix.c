@@ -4,7 +4,7 @@
 #include "mpi.h"
 
 #define posicao(I, J, COLUNAS) (I*COLUNAS + J)
-#define TAMANHO 4
+#define TAMANHO 8
 
 
 /**

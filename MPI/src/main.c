@@ -9,7 +9,7 @@
 #include "MatrixIO.c"
 #include "mpi.h"
 
-#define TAMANHO 4
+#define TAMANHO 8
 
 
 int main (int argc, char *argv[])
